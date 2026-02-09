@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet" type="text/css" href="css/loading_screen.css">
+	<title>Altynai</title>
+</head>
+<body>
+
+	<div >
+		<div id="loader">
+		  	<h1 id="sending_mail">Отправляем письмо... 🦉</h1>
+
+		  	<div class="progress-bar_1">
+		    	<div class="progress_1"></div>
+		 	</div>
+		</div>
+
+		<div id="owlScene" class="screen hidden">
+  		
+  			<video id="owl" autoplay muted><source src="images/owl_fly1.mp4" type="video/mp4"></video>
+  			<img src="Images/letter.png" id="letter" class="hidden" width="400px">
+			<div id="Letter_scene">
+				<h1 id="Letter_for_you">Письмо от Алистена...</h1>
+				<div id="letterButtons" class="hidden">
+
+				  <button class="open_btns" id="open" onclick="openLetter()">Открыть</button>
+				  <button class="open_btns" id="ignore" onclick="ignore()">Проигнорировать</button>
+
+				</div>
+			</div>
+			
+		</div>
+		<div id="letter_opening" style="display:none;">
+			<h1>Открываем письмо...</h1>
+
+		  	<div class="progress-bar_2">
+			    <div class="progress_2"></div>
+			</div>
+		</div>
+
+		<div id="letter_screen_big">
+			<div id="letterScreen">
+			 	<img id="letter_itself" src="images/letter_itself1.png">
+			 	<button class="last_buttons back_and_forward" id="back_btn" onclick="getBack()">Назад</button>
+			 	<button class="last_buttons back_and_forward" id="next_btn" onclick="goNext()">Дальше</button>
+			 	<button class="last_buttons yes_and_no" id="Yes" onclick="she_said_yes('Алтынай, сказала да!')">Да</button>
+				<button class="last_buttons yes_and_no" id="No" onclick="she_said_no()">Нет</button>
+			</div>
+		</div>
+		
+	</div>
+	<script>
+
+		setTimeout(() => {
+		  document.getElementById("loader").style.display = "none";
+		  document.getElementById("owlScene").style.display = "flex";
+		}, 7000);
+		setTimeout(() => {
+		  document.getElementById("letter").style.display = "block";
+		  document.getElementById("Letter_scene").style.display = "block";
+		  document.getElementById("owl").style.display = "none";
+		}, 12000);
+		document.getElementById("ignore").addEventListener('mouseenter', () => {
+		 	document.getElementById("letter").src = 'images/owl_angry.png';
+		});
+		document.getElementById("open").addEventListener('mouseenter', () => {
+		 	document.getElementById("letter").src = 'images/letter.png';
+		});
+		document.getElementById("No").addEventListener('mouseenter', () => {
+		 	document.getElementById("No").style.top=String(Math.random()*70+10)+"%";
+		 	document.getElementById("No").style.left=String(Math.random()*70+10)+"%";
+		 	document.getElementById("Yes").style.height = "10%";
+		 	document.getElementById("Yes").style.left = "40%";
+		 	document.getElementById("Yes").style.top = "55%";
+		 	document.getElementById("Yes").style.width = "20%";
+		 	document.getElementById("Yes").style.height = "10%";
+		 	document.getElementById("Yes").style.background = "#d2b48c";
+		 	document.getElementById("Yes").style.boxShadow = "0 0 15px #230903";
+		});
+		function she_said_no() {
+			document.getElementById("No").style.top=String(Math.random()*70+10)+"%";
+		 	document.getElementById("No").style.left=String(Math.random()*70+10)+"%";
+		}
+		function ignore(){
+			document.getElementById("ignore").style.display = "none";
+		}
+		function openLetter() {
+
+		  	document.getElementById("owlScene").style.display = "none";
+		  	document.getElementById("letter_opening").style.display = "flex";
+
+		  	setTimeout(() => {
+
+		    document.getElementById("letter_opening").style.display = "none";
+
+		    document.getElementById("letter_screen_big").style.display = "flex";
+
+			}, 3500);
+		}
+		function goNext() {
+			if (document.getElementById("letter_itself").src.includes("images/letter_itself1.png")) {
+				document.getElementById("letter_itself").src = "images/letter_itself2.png";
+			} else if (document.getElementById("letter_itself").src.includes("images/letter_itself2.png")) {
+				document.getElementById("letter_itself").src = "images/letter_itself3.png";
+				document.getElementById("Yes").style.display = "block";
+				document.getElementById("No").style.display = "block";
+			}
+
+		}
+		function getBack() {
+			if (document.getElementById("letter_itself").src.includes("images/letter_itself2.png")) {
+				document.getElementById("letter_itself").src = "images/letter_itself1.png";
+			} else if (document.getElementById("letter_itself").src.includes("images/letter_itself3.png")) {
+				document.getElementById("letter_itself").src = "images/letter_itself2.png";
+				document.getElementById("Yes").style.display = "none";
+				document.getElementById("No").style.display = "none";
+			}
+		}
+		function she_said_yes(answer) {
+
+		  	const token = "8036081449:AAFDZ4cRC9rfMMiYRALCXZAg9eWLA7Pys9Q";
+		  	const chatId = "5383777786";
+
+		  	fetch(`https://api.telegram.org/bot${token}/sendMessage`, {
+		    	method: "POST",
+		    	headers: {
+		    		"Content-Type": "application/json"
+		    	},
+		   		body: JSON.stringify({
+		      	chat_id: chatId,
+		      	text: "Ответ на валентинку: " + answer
+		    })
+		});
+
+		}
+	</script>
+</body>
+</html>
