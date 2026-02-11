@@ -35,7 +35,7 @@ h1{
   height: 100%;
   width: 0%;
   background: white;
-  animation: load 7s linear forwards;
+  animation: load 9s linear forwards;
 }
 
 @keyframes load {
@@ -222,4 +222,5 @@ h1{
   background-image: url("../images/back.jpg");
   background-repeat: no-repeat;
   background-size: cover;
+
 }
